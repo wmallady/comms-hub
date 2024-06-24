@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { useState } from "react";
+import SMS from './views/SMS'
+import Email from './views/Email'
+import './App.css'
+
+export default function Root() {
+  const [isChecked, setIsChecked] = useState(false)
+
+  const handleCheckboxChange = (Event) =>{
+      setIsChecked(Event.target.checked);
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div id="sidebar">
+        <div>
+          <div className="toggle-button-cover">
+            <div className="button-cover">
+              <div className="button r" id="modeButton">
+                <input type="checkbox" className="checkbox" onChange={handleCheckboxChange}/>
+                <div className="knobs"></div>
+                <div className="layer"></div>
+            </div>
+          </div>
+        </div>
+          {isChecked ? <SMS /> : <Email />}
+        </div>
+    </div>  
+    </>
   );
 }
-
-export default App;
