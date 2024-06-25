@@ -16,7 +16,8 @@ const SMS = () => {
   const [phase, setPhase] = useState(0);
   const [pastInsertGroupNum, setPastInsertGroupNum] = useState([]);
   const [testPhoneNumber, setTestPhoneNumber] = useState([]);
-  const [messageStatus /*setMessageStatus*/] = useState("");
+  const [messageStatus, setMessageStatus] = useState("");
+  const [charCount, setCharCount] = useState(0);
 
   //Input change functions
 
@@ -39,18 +40,20 @@ const SMS = () => {
   // handler for SMS
 
   const handleSendSMS = async (toPhone, messageBody) => {
+    console.log(`Sending SMS to: ${toPhone}`);
     try {
-      const response = await fetch("/sendTestmessage", {
+      const response = await fetch("http://localhost:5173/sendTestMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          to: toPhone,
-          body: messageBody,
+          toPhone: toPhone,
+          messageBody: messageBody,
         }),
       });
       if (!response.ok) {
+        setMessageStatus("Error in Sending Messages");
         throw new Error("Failed to send SMS.");
       }
       return response.text(); // Assuming you want to return some data upon success
@@ -60,25 +63,35 @@ const SMS = () => {
     }
   };
 
+  const handleTestMessageClick = async () => {
+    try {
+      const result = await handleSendSMS(testPhoneNumber, message);
+      setMessageStatus(`Test Message Status: ${result}`);
+    } catch (error) {
+      setMessageStatus(`Test Message Status: ${error}`);
+    }
+  };
+
   // Char Count Stuff
 
   const maxLength = 160;
   const handleCharChange = (event) => {
+    setCharCount(event.target.value.length);
     setMessage(event.target.value);
   };
 
-  const remainingChars = maxLength - message.length;
+  const remainingChars = maxLength - charCount;
 
   const countColor =
-    message.length > maxLength - 20
+    charCount > maxLength - 20
       ? "red"
-      : message.length > 110
+      : charCount > maxLength - 50
         ? "orange"
         : "white";
 
   //get past insert group
   useEffect(() => {
-    fetch("http://localhost:3000/lastGroupNum")
+    fetch("http://localhost:5173/lastGroupNum")
       .then((response) => response.json())
       .then((data) => {
         setPastInsertGroupNum(data.lastGroupNum); // Assuming your server returns an object with a property `lastGroupNum`
@@ -113,11 +126,11 @@ const SMS = () => {
     if (!e.target.files) {
       return;
     }
-    const file = e.target.files[0];
-    const { name } = file;
+    const fileName = e.target.files[0];
+    const { name } = fileName;
     setFilename(name);
 
-    const rows = Papa.parse(filename, config);
+    const rows = Papa.parse(fileName, config);
     console.log(rows);
   };
 
@@ -183,10 +196,7 @@ const SMS = () => {
             value={testPhoneNumber}
             onChange={changeTestPhone}
           />
-          <button
-            id="testPhoneButton"
-            onClick={() => handleSendSMS(testPhoneNumber, message)}
-          >
+          <button id="testPhoneButton" onClick={handleTestMessageClick}>
             Send Test Message
           </button>
         </div>
@@ -204,7 +214,9 @@ const SMS = () => {
             {" "}
             Characters Remaining: {remainingChars}/160
           </span>
-          <span id="testResult"> {messageStatus} </span>
+          <span id="messageStatusDiv" onChange={() => setMessageStatus}>
+            Message Status ::: {messageStatus}
+          </span>
 
           <button
             id="sendMessagesButton" /*sendMessages(filename,message,groupName,insertGroupNum)*/
