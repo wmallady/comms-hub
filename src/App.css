@@ -85,12 +85,14 @@ button {
   transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
 }
 
-button :hover{
+button:hover{
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
-button :active{
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 1) inset; /* Inset shadow for pressed state */
+button:active{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1) inset;
+  transform: scale(.95); /* Inset shadow for pressed state */
 }
 /* BIG CONTAINER */
 #mainSMSContainer {
@@ -199,7 +201,59 @@ button :active{
   opacity: 0.5;
 }
 
+/* POP UP STYLING */
 
+#messageStatusDiv {
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.modal {
+  font-size: 18px;
+  background-color: darkslategrey;
+  width: 70%;
+  max-width: 500px; /* Set a max-width for responsiveness */
+  height: auto;
+  padding: 20px; /* Add padding to avoid text overlapping with the close button */
+  border: 2px solid whitesmoke;
+  border-radius: 1.5%;
+  position: fixed; /* Use fixed positioning to ensure it stays centered */
+  top: 50%; /* Center the modal vertically */
+  left: 50%; /* Center the modal horizontally */
+  transform: translate(-50%, -50%); /* Adjust the centering with transform */
+  box-sizing: border-box; /* Ensure padding is included in the width and height */
+  text-align: center; /* Center the text inside the modal */
+}
+
+.modal .close {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  right: 10px; /* Position the button closer to the right edge */
+  top: 10px; /* Position the button closer to the top edge */
+  width: 27px;
+  height: 27px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background: darkcyan;
+  border-radius: 50%;
+  border: 1px solid #cfcece;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.modal .close:hover {
+  background: #007f7f;
+  transform: scale(1.1);
+}
+
+.modal .close:active {
+  background: #006666;
+  transform: scale(0.9);
+}
 
 /* SELECT MODE BUTTON STYLING */ 
 #modeButton {

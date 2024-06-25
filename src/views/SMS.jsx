@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Papa from "papaparse";
+import Popup from "reactjs-popup";
 
 import {
   /*filterData sendMessages, sendTwilioMessage*/ getDateStrings,
@@ -18,6 +19,7 @@ const SMS = () => {
   const [testPhoneNumber, setTestPhoneNumber] = useState([]);
   const [messageStatus, setMessageStatus] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const [open, setOpen] = useState(false);
 
   //Input change functions
 
@@ -40,7 +42,6 @@ const SMS = () => {
   // handler for SMS
 
   const handleSendSMS = async (toPhone, messageBody) => {
-    console.log(`Sending SMS to: ${toPhone}`);
     try {
       const response = await fetch("http://localhost:5173/sendTestMessage", {
         method: "POST",
@@ -56,19 +57,22 @@ const SMS = () => {
         setMessageStatus("Error in Sending Messages");
         throw new Error("Failed to send SMS.");
       }
-      return response.text(); // Assuming you want to return some data upon success
+      return response.text();
     } catch (error) {
       console.error("Error sending SMS:", error);
       throw error; // Re-throw the error to handle it in the calling function if needed
     }
   };
 
+  /* call it from a seperate function so we can pop up modal and adjust the message status */
+
   const handleTestMessageClick = async () => {
     try {
+      setOpen(true);
       const result = await handleSendSMS(testPhoneNumber, message);
-      setMessageStatus(`Test Message Status: ${result}`);
+      setMessageStatus(`TEST MESSAGE - ${result}`);
     } catch (error) {
-      setMessageStatus(`Test Message Status: ${error}`);
+      setMessageStatus(`TEST MESSAGE - ${error}`);
     }
   };
 
@@ -192,13 +196,26 @@ const SMS = () => {
           <input
             id="testPhoneInput"
             placeholder="555-123-4567"
-            type="tel"
             value={testPhoneNumber}
             onChange={changeTestPhone}
           />
           <button id="testPhoneButton" onClick={handleTestMessageClick}>
             Send Test Message
           </button>
+          <Popup open={open} onClose={() => setOpen(false)} modal nested>
+            {(close) => (
+              <div className="modal">
+                <button className="close" onClick={close}>
+                  &times;
+                </button>
+                <div id="messageStatusDiv">
+                  Message Status :::
+                  <br></br>
+                  {messageStatus}
+                </div>
+              </div>
+            )}
+          </Popup>
         </div>
         <div className="smallContainer">
           <label htmlFor="messageInput">Enter your Message ::: </label>
@@ -213,9 +230,6 @@ const SMS = () => {
           <span id="count" style={{ color: countColor }}>
             {" "}
             Characters Remaining: {remainingChars}/160
-          </span>
-          <span id="messageStatusDiv" onChange={() => setMessageStatus}>
-            Message Status ::: {messageStatus}
           </span>
 
           <button
