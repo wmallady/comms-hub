@@ -10,9 +10,9 @@ const router = express();
 router.use(cors());
 router.use(express.json());
 
-const accountSid = process.env.ACCOUNT_SID_TEST
-const authToken = process.env.AUTH_TOKEN_TEST
-const twilioPhone = process.env.TWILIO_PHONE_NUMBER_TEST
+const accountSid = process.env.REACT_APP_ACCOUNT_SID_TEST
+const authToken = process.env.REACT_APP_AUTH_TOKEN_TEST
+const twilioPhone = process.env.REACT_APP_TWILIO_PHONE_NUMBER_TEST
 const client = twilio(accountSid, authToken);
 
 router.post('/sendTestMessage', async (req, res) => {
@@ -29,7 +29,7 @@ router.post('/sendTestMessage', async (req, res) => {
         to: toPhone,
       });
   
-      res.status(200).send('Success');
+      res.status(200).send('Success!');
     } catch (error) {
       console.error("Error sending Twilio message:", error);
       res.status(500).send(`Failed to send message: ${error.message}`);

@@ -18,10 +18,10 @@ const dbConfig = {
         
     // TEST SERVER CREDENTIALS
 
-    server: process.env.DB_SERVER_TEST,
-    port: parseInt(process.env.DB_PORT_TEST),
-    user: process.env.DB_USER_TEST,
-    password: process.env.DB_PASSWORD_TEST,
+    server: process.env.REACT_APP_DB_SERVER_TEST,
+    port: parseInt(process.env.REACT_APP_DB_PORT_TEST),
+    user: process.env.REACT_APP_DB_USER_TEST,
+    password: process.env.REACT_APP_DB_PASSWORD_TEST,
     encrypt: true,
     trustServerCertificate: true,
  

@@ -8,28 +8,7 @@ export function getDateStrings() {
         timestamp: currentDate.toISOString().slice(0, 19).replace('T', ' '),
     }
 }
-/*const accountSid = process.env.ACCOUNT_SID_TEST
-const authToken = process.env.AUTH_TOKEN_TEST
-const fromNumber = process.env.TWILIO_PHONE_NUMBER_TEST
-
-const client = twilio(accountSid, authToken);
-
-export async function sendTwilioMessage(to, body) {
-    return new Promise((resolve, reject) => {
-        try {
-                client.messages.create({
-                body: body,
-                from: fromNumber,
-                to: to,
-            });
-            resolve('success');
-        } catch (error) {
-            console.error("Error sending Twilio message:", error);
-            reject(error);
-        }
-    });
-}*/
-
+/*
 export function filterData(rows) {
     let i = 1
     let filteredRows = []
@@ -48,7 +27,7 @@ export function filterData(rows) {
                 * PERSON_ID (Info for Nextgen)
         
                 
-            */
+            
             const validData =
                 row['first'] !== undefined &&
                 row['first'] !== null &&
@@ -108,7 +87,7 @@ export function filterData(rows) {
     }
 
     return filteredRows
-}
+} */
 
 /*const sendDataToServer = async (filteredRows) => {
     try {
@@ -132,28 +111,6 @@ export function filterData(rows) {
 };
 */
 
-export const sendSMS = async (toPhone, messageBody) => {
-    //console.log(`source csv file path is ${filepath} at ${getDateStrings().timestamp}`);
-    try {
-        const response = await fetch('/localhost:3000/sendTestmessage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                to: toPhone,
-                body: messageBody,
-            }),
-        })
-        if (!response.ok) {
-            throw new Error('Failed to send SMS.')
-        }
-        return response.text() // Assuming you want to return some data upon success
-    } catch (error) {
-        console.error('Error sending SMS:', error)
-        throw error // Re-throw the error to handle it in the calling function if needed
-    }
-}
 // Read data from CSV
 /*
                 for (let i = filteredRows.length - 1; i >= 0; i--) {

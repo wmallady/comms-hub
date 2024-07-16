@@ -184,13 +184,12 @@ button:active{
 
 
 .enabled {
-  margin-left: 10px;
-  width: 90%;
-  padding: 20px; /* Larger padding for a bigger text box */
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #333333;
+  width: 20vw;
+  height: 4vh;
 }
 
 .disabled {
