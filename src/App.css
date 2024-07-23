@@ -95,7 +95,7 @@ button:active{
   transform: scale(.95); /* Inset shadow for pressed state */
 }
 /* BIG CONTAINER */
-#mainSMSContainer {
+#mainContainer {
   background-color: #222831;
   border-radius: 4px;
   padding: 10px;
@@ -377,7 +377,7 @@ button:active{
 /* mobile responsive styling */
 
 @media (max-width: 768px) {
-  #mainSMSContainer {
+  #mainContainer {
     width: 90%; /* Increase width for mobile screens */
   }
 

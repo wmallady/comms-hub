@@ -217,7 +217,7 @@ const SMS = () => {
   // SMS page elements
   return (
     <div>
-      <div id="mainSMSContainer">
+      <div id="mainContainer">
         <div className="smallContainer">
           <Button
             component="label"

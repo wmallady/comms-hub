@@ -14,8 +14,7 @@ router.use(express.json());
 
 // Database configuration
 const dbConfig = {
-        
-        
+
     // TEST SERVER CREDENTIALS
 
     server: process.env.REACT_APP_DB_SERVER_TEST,
@@ -29,11 +28,11 @@ const dbConfig = {
 
 
 // Endpoint to query the database
-router.get('/lastGroupNum', async (req, res) => {
+router.get('/lastEmailGroupNum', async (req, res) => {
     try {
         // Connect to the database (CHANGE QUERY IN PROD)
         let pool = await sql.connect(dbConfig);
-        const result = await pool.request().query('select max(insertgroup) as lastGroupNum from [model].[dbo].[GH_Process_MassText]');
+        const result = await pool.request().query('select max(insertgroup) as lastGroupNum from [model].[dbo].[GH_Process_MassEmail]');
 
         // Send the result to the client
         res.json(result.recordset[0]);
