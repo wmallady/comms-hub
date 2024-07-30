@@ -270,18 +270,19 @@ const SMS = () => {
             value={phase}
             onChange={changePhase}
           ></input>
-        </div>
-        <div className="smallContainer">
+          {/* </div>
+        <div className="smallContainer"> */}
           <label htmlFor="testPhoneInput">
             Enter A Test Phone Number Here :::
           </label>
           <input
+            type="text"
             id="testPhoneInput"
             placeholder="555-123-4567"
             value={testPhoneNumber}
             onChange={changeTestPhone}
           />
-          <button id="testPhoneButton" onClick={handleTestMessageClick}>
+          <button className="testButton" onClick={handleTestMessageClick}>
             Send Test Message
           </button>
           <Popup open={open} onClose={() => setOpen(false)} modal nested>
@@ -298,8 +299,8 @@ const SMS = () => {
               </div>
             )}
           </Popup>
-        </div>
-        <div className="smallContainer">
+          {/* </div>
+        <div className="smallContainer"> */}
           <label htmlFor="messageInput">Enter your Message ::: </label>
           <textarea
             id="messageInput"
@@ -314,7 +315,10 @@ const SMS = () => {
             Characters Remaining: {remainingChars}/160
           </span>
 
-          <button id="sendMessagesButton" onClick={handleSendMessagesClick}>
+          <button
+            className="sendMessagesButton"
+            onClick={handleSendMessagesClick}
+          >
             Send Message
           </button>
         </div>

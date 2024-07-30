@@ -118,37 +118,37 @@ button:active{
 /**** Button Styling ****/
 
 /* send messages button */ 
-#sendMessagesButton {
+.sendMessagesButton {
   background-color: red;
   color: white;
 }
 
 
-#sendMessagesButton:hover {
+.sendMessagesButton:hover {
   background-color: orangered; /* Darker cyan on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow on hover */
 }
 
-#sendMessagesButton:active {
+.sendMessagesButton:active {
   background-color: darkred; /* Darker cyan on click */
   box-shadow: none; /* Remove shadow on click */
 }
 
 /* select csv button */ 
 
-#selectCSVButton {
+.selectCSVButton {
   background-color: forestgreen;
   color: white;
 
 }
 
 
-#selectCSVButton:hover {
+.selectCSVButton:hover {
   background-color: lightgreen; /* Darker cyan on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow on hover */
 }
 
-#selectCSVButton:active {
+.selectCSVButton:active {
   background-color: darkgreen; /* Darker cyan on click */
   box-shadow: none; /* Remove shadow on click */
 }
@@ -156,18 +156,18 @@ button:active{
 /* test phone button */ 
 
 
-#testPhoneButton {
+.testButton {
   background-color: orange;
   color: white;
 
 }
 
-#testPhoneButton:hover {
+.testButton:hover {
   background-color: lightsalmon; /* Darker cyan on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow on hover */
 }
 
-#testPhoneButton:active {
+.testButton:active {
   background-color: orangered; /* Darker cyan on click */
   box-shadow: none; /* Remove shadow on click */
 }

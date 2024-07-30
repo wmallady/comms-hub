@@ -8,9 +8,8 @@ import { getDateStrings } from "../utils/utils.js";
 
 const SMS = () => {
   const [subject, setSubject] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
   const [body, setBody] = useState("");
-  const [fileName, setFileName] = useState("");
+  const [csvFileName, setCsvFileName] = useState("");
   const [groupName, setGroupName] = useState("");
   const [insertGroupNum, setInsertGroupNum] = useState(0);
 
@@ -58,7 +57,7 @@ const SMS = () => {
         console.log(parsed.data);
         setRows(parsed.data);
 
-        setFileName(file.name);
+        setCsvFileName(file.name);
 
         e.target.value = null;
       },
@@ -71,7 +70,7 @@ const SMS = () => {
   };
 
   const changeTestEmail = (e) => {
-    setEmailAddress(e.target.value);
+    setTestEmail(e.target.value);
   };
   // handlers for SMS
 
@@ -139,12 +138,16 @@ const SMS = () => {
     }
   };
 
+  const handleBodyUpload = (e) => {
+    setBody(e.target.files[0]);
+  };
+
   /* call it from a seperate function so we can pop up modal and adjust the message status */
 
   const handleTestEmailClick = async () => {
     try {
       setOpen(true);
-      const result = await handleSendTestEmail(emailAddress, subject, body);
+      const result = await handleSendTestEmail(testEmail, subject, body);
       setMessageStatus(`TEST MESSAGE - ${result}`);
     } catch (error) {
       setMessageStatus(`TEST MESSAGE - ${error}`);
@@ -184,9 +187,32 @@ const SMS = () => {
             />
           </Button>
 
-          <span id="csvSpan"> Selected CSV ::: {fileName} </span>
-        </div>
-        <div className="smallContainer">
+          <span className="csvSpan"> Selected CSV ::: {csvFileName} </span>
+
+          <Button
+            component="label"
+            variant="outlined"
+            color="success"
+            startIcon={<UploadFileIcon />}
+            sx={{ marginRight: "1rem" }}
+          >
+            Select Body HTML
+            <input
+              type="file"
+              accept=".html"
+              hidden
+              onChange={handleBodyUpload}
+            />
+          </Button>
+          <span className="csvSpan"> Selected HTML ::: {body.name} </span>
+
+          <label htmlFor="subjectInput">Enter your Subject ::: </label>
+          <input
+            id="subjectInput"
+            value={subject}
+            onChange={changeSubject}
+          ></input>
+
           <label htmlFor="groupNumberInput">
             Enter a Group Number (Most Recent is:{" "}
             {pastInsertGroupNum === null ? "Loading..." : pastInsertGroupNum}){" "}
@@ -206,18 +232,16 @@ const SMS = () => {
             value={groupName}
             onChange={changeGroupName}
           ></input>
-        </div>
-        <div className="smallContainer">
           <label htmlFor="testEmailInput">
             Enter A Test Email Address Here :::
           </label>
           <input
             id="testEmailInput"
             placeholder="john@doe.com"
-            value={emailAddress}
+            value={testEmail}
             onChange={changeTestEmail}
           />
-          <button id="testEmailButton" onClick={handleTestEmailClick}>
+          <button className="testButton" onClick={handleTestEmailClick}>
             Send Test Email
           </button>
           <Popup open={open} onClose={() => setOpen(false)} modal nested>
@@ -234,16 +258,12 @@ const SMS = () => {
               </div>
             )}
           </Popup>
-        </div>
-        <div className="smallContainer">
-          <label htmlFor="subjectInput">Enter your Subject ::: </label>
-          <textarea
-            id="subjectInput"
-            value={subject}
-            onChange={changeSubject}
-          ></textarea>
 
-          <button id="sendEmailsButton" onClick={handleSendEmailClick}>
+          <button
+            id="sendEmailsButton"
+            onClick={handleSendEmailClick}
+            className="sendMessagesButton"
+          >
             Send Message
           </button>
         </div>
@@ -266,7 +286,7 @@ const SMS = () => {
                 <td>{insertGroupNum}</td>
                 <td>{groupName}</td>
                 <td>{getDateStrings().month}</td>
-                <td>{fileName}</td>
+                <td>{body.name}</td>
                 <td>{subject}</td>
                 <td>{getDateStrings().timestamp}</td>
               </tr>
