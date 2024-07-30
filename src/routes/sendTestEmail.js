@@ -21,7 +21,7 @@ router.post('/sendTestEmail', async (req, res) => {
   const { emailAddress, subject, body } = req.body;
 
   if (!emailAddress || !subject || !body) {
-    return res.status(400).send('Missing required parameters: toEmail, subject, and/or messageBody');
+    return res.status(400).send('Missing required parameters: toEmail, subject, and/or body');
   }
 
   const mailOptions = {

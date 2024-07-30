@@ -202,7 +202,7 @@ button:active{
 
 /* POP UP STYLING */
 
-#messageStatusDiv {
+.messageStatusDiv {
   color: black;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

@@ -270,37 +270,7 @@ const SMS = () => {
             value={phase}
             onChange={changePhase}
           ></input>
-          {/* </div>
-        <div className="smallContainer"> */}
-          <label htmlFor="testPhoneInput">
-            Enter A Test Phone Number Here :::
-          </label>
-          <input
-            type="text"
-            id="testPhoneInput"
-            placeholder="555-123-4567"
-            value={testPhoneNumber}
-            onChange={changeTestPhone}
-          />
-          <button className="testButton" onClick={handleTestMessageClick}>
-            Send Test Message
-          </button>
-          <Popup open={open} onClose={() => setOpen(false)} modal nested>
-            {(close) => (
-              <div className="modal">
-                <button className="close" onClick={close}>
-                  &times;
-                </button>
-                <div id="messageStatusDiv">
-                  Message Status :::
-                  <br></br>
-                  {messageStatus}
-                </div>
-              </div>
-            )}
-          </Popup>
-          {/* </div>
-        <div className="smallContainer"> */}
+
           <label htmlFor="messageInput">Enter your Message ::: </label>
           <textarea
             id="messageInput"
@@ -315,11 +285,43 @@ const SMS = () => {
             Characters Remaining: {remainingChars}/160
           </span>
 
+          {/* </div>
+        <div className="smallContainer"> */}
+          <label htmlFor="testPhoneInput">
+            Enter A Test Phone Number Here :::
+          </label>
+          <input
+            type="text"
+            id="testPhoneInput"
+            placeholder="555-123-4567"
+            value={testPhoneNumber}
+            onChange={changeTestPhone}
+          />
+          <button className="testButton" onClick={handleTestMessageClick}>
+            Send Test SMS
+          </button>
+          <Popup open={open} onClose={() => setOpen(false)} modal nested>
+            {(close) => (
+              <div className="modal">
+                <button className="close" onClick={close}>
+                  &times;
+                </button>
+                <div className="messageStatusDiv">
+                  Message Status :::
+                  <br></br>
+                  {messageStatus}
+                </div>
+              </div>
+            )}
+          </Popup>
+          {/* </div>
+        <div className="smallContainer"> */}
+
           <button
             className="sendMessagesButton"
             onClick={handleSendMessagesClick}
           >
-            Send Message
+            Send Mass SMS
           </button>
         </div>
         <div className="previewContainer">

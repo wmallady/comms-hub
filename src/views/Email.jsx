@@ -6,9 +6,10 @@ import Popup from "reactjs-popup";
 
 import { getDateStrings } from "../utils/utils.js";
 
-const SMS = () => {
+const Email = () => {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [htmlName, setHtmlName] = useState("");
   const [csvFileName, setCsvFileName] = useState("");
   const [groupName, setGroupName] = useState("");
   const [insertGroupNum, setInsertGroupNum] = useState(0);
@@ -21,7 +22,7 @@ const SMS = () => {
   const [messageStatus, setMessageStatus] = useState("");
   const [open, setOpen] = useState(false);
 
-  //Setters
+  // Setters
 
   const changeGroupName = (event) => {
     setGroupName(event.target.value);
@@ -42,7 +43,7 @@ const SMS = () => {
     if (!file) return;
 
     Papa.parse(file, {
-      //config options
+      // config options
       header: true,
       delimiter: ",",
       newline: "", // auto-detect
@@ -51,7 +52,7 @@ const SMS = () => {
       encoding: "",
       worker: false,
       comments: false,
-      //functions once it's complete
+      // functions once it's complete
       complete: (parsed) => {
         // Assuming parsed.data is an array of rows from the CSV
         console.log(parsed.data);
@@ -72,7 +73,8 @@ const SMS = () => {
   const changeTestEmail = (e) => {
     setTestEmail(e.target.value);
   };
-  // handlers for SMS
+
+  // Handlers for Email
 
   const handleSendTestEmail = async (emailAddress, subject, body) => {
     try {
@@ -139,12 +141,23 @@ const SMS = () => {
   };
 
   const handleBodyUpload = (e) => {
-    setBody(e.target.files[0]);
+    const file = e.target.files[0];
+
+    if (!file) return;
+    setHtmlName(file.name);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const fileContent = event.target.result;
+      setBody(fileContent); // Set the body state to the file content as a string
+    };
+    reader.readAsText(file);
   };
 
-  /* call it from a seperate function so we can pop up modal and adjust the message status */
+  /* call it from a separate function so we can pop up modal and adjust the message status */
 
   const handleTestEmailClick = async () => {
+    console.log(JSON.stringify(body));
+
     try {
       setOpen(true);
       const result = await handleSendTestEmail(testEmail, subject, body);
@@ -154,7 +167,7 @@ const SMS = () => {
     }
   };
 
-  //get past insert group
+  // Get past insert group
   useEffect(() => {
     fetch("http://localhost:5173/lastEmailGroupNum")
       .then((response) => response.json())
@@ -167,7 +180,7 @@ const SMS = () => {
       });
   }, []);
 
-  // SMS page elements
+  // Email page elements
   return (
     <div>
       <div id="mainContainer">
@@ -204,7 +217,10 @@ const SMS = () => {
               onChange={handleBodyUpload}
             />
           </Button>
-          <span className="csvSpan"> Selected HTML ::: {body.name} </span>
+          <span className="csvSpan">
+            {" "}
+            Selected HTML ::: {body ? htmlName : ""}{" "}
+          </span>
 
           <label htmlFor="subjectInput">Enter your Subject ::: </label>
           <input
@@ -250,7 +266,7 @@ const SMS = () => {
                 <button className="close" onClick={close}>
                   &times;
                 </button>
-                <div id="messageStatusDiv">
+                <div className="messageStatusDiv">
                   Message Status :::
                   <br></br>
                   {messageStatus}
@@ -264,7 +280,7 @@ const SMS = () => {
             onClick={handleSendEmailClick}
             className="sendMessagesButton"
           >
-            Send Message
+            Send Mass Email
           </button>
         </div>
         <div className="previewContainer">
@@ -286,7 +302,7 @@ const SMS = () => {
                 <td>{insertGroupNum}</td>
                 <td>{groupName}</td>
                 <td>{getDateStrings().month}</td>
-                <td>{body.name}</td>
+                <td>{body ? htmlName : ""}</td>
                 <td>{subject}</td>
                 <td>{getDateStrings().timestamp}</td>
               </tr>
@@ -298,4 +314,4 @@ const SMS = () => {
   );
 };
 
-export default SMS;
+export default Email;
