@@ -24,6 +24,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bolder;
+ 
 }
 
 textarea {
@@ -67,7 +68,22 @@ input {
   height: 4vh;
 }
 
-
+.Button{
+  padding: 15px 30px; /* Adjusted padding for buttons */
+  margin: 0 auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-size: 12px; /* Adjusted font size */
+  border: none;
+  border-radius: 8px; /* Adjusted border radius for smaller buttons */
+  cursor: pointer;
+  width: 20vw;
+  height: 5vh;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Initial shadow for normal state */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
 button {
   padding: 15px 30px; /* Adjusted padding for buttons */
   margin: 0 auto;
@@ -110,8 +126,10 @@ button:active{
 /* little containers */ 
 
 .smallContainer {
-  display: flex;
+ display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -134,27 +152,24 @@ button:active{
   box-shadow: none; /* Remove shadow on click */
 }
 
-/* select csv button */ 
 
-.selectCSVButton {
-  background-color: forestgreen;
-  color: white;
 
+
+
+.uploadButton{
+  padding: 15px 30px; /* Adjusted padding for buttons */
+  margin: 0 auto;
+  border: none;
+  border-radius: 8px; /* Adjusted border radius for smaller buttons */
+  cursor: pointer;
+  width: 9.25vw;
+  height: 5vh;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Initial shadow for normal state */
+  transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
 }
-
-
-.selectCSVButton:hover {
-  background-color: lightgreen; /* Darker cyan on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow on hover */
-}
-
-.selectCSVButton:active {
-  background-color: darkgreen; /* Darker cyan on click */
-  box-shadow: none; /* Remove shadow on click */
-}
-
-/* test phone button */ 
-
 
 .testButton {
   background-color: orange;
@@ -388,6 +403,11 @@ button:active{
   button {
     width: 90%; /* Adjust button width for mobile */
     padding: 10px 20px; /* Adjust button padding for mobile */
+  }
+
+  .Button{
+    width: 90%;
+    padding: 10px 20px;
   }
 
   .smallContainer {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { Button, Radio } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Papa from "papaparse";
 import Popup from "reactjs-popup";
@@ -81,12 +81,21 @@ const Email = () => {
       const response = await fetch("http://localhost:5173/sendTestEmail", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/JSON",
         },
         body: JSON.stringify({
           emailAddress: emailAddress,
           subject: subject,
-          body: body,
+          body:
+            '<img src="logo.png" style="display: block; margin: 0 auto; align-items:center"/>' +
+            body.toString(),
+          attachments: [
+            {
+              filename: "grace-health-logo.png",
+              path: "./public/grace-health-logo.png",
+              cid: "logo.png", //same cid value as in the html img src
+            },
+          ],
         }),
       });
       if (!response.ok) {
@@ -140,6 +149,8 @@ const Email = () => {
     }
   };
 
+  const handleActivePatientsClick = () => {};
+
   const handleBodyUpload = (e) => {
     const file = e.target.files[0];
 
@@ -148,7 +159,7 @@ const Email = () => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const fileContent = event.target.result;
-      setBody(fileContent); // Set the body state to the file content as a string
+      setBody(fileContent.toString()); // Set the body state to the file content as a string
     };
     reader.readAsText(file);
   };
@@ -156,7 +167,7 @@ const Email = () => {
   /* call it from a separate function so we can pop up modal and adjust the message status */
 
   const handleTestEmailClick = async () => {
-    console.log(JSON.stringify(body));
+    console.log(body);
 
     try {
       setOpen(true);
@@ -185,21 +196,31 @@ const Email = () => {
     <div>
       <div id="mainContainer">
         <div className="smallContainer">
-          <Button
-            component="label"
-            variant="outlined"
-            startIcon={<UploadFileIcon />}
-            sx={{ marginRight: "1rem" }}
-          >
-            Select Contacts CSV
-            <input
-              type="file"
-              accept=".csv"
-              hidden
-              onChange={handleFileUpload}
-            />
-          </Button>
-
+          <div>
+            <Button
+              component="label"
+              variant="outlined"
+              startIcon={<UploadFileIcon />}
+              className="uploadButton"
+            >
+              Upload Contacts CSV
+              <input
+                type="file"
+                accept=".csv"
+                hidden
+                onChange={handleFileUpload}
+              />
+            </Button>
+            {"\tOR\t"}
+            <Button
+              component="label"
+              className="uploadButton"
+              onClick={handleActivePatientsClick}
+              sx={"background-color:#008ECC;color:white"}
+            >
+              Pull Active Patients List
+            </Button>
+          </div>
           <span className="csvSpan"> Selected CSV ::: {csvFileName} </span>
 
           <Button
@@ -207,7 +228,7 @@ const Email = () => {
             variant="outlined"
             color="success"
             startIcon={<UploadFileIcon />}
-            sx={{ marginRight: "1rem" }}
+            className="Button"
           >
             Select Body HTML
             <input

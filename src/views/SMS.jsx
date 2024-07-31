@@ -221,11 +221,11 @@ const SMS = () => {
         <div className="smallContainer">
           <Button
             component="label"
+            className="Button"
             variant="outlined"
             startIcon={<UploadFileIcon />}
-            sx={{ marginRight: "1rem" }}
           >
-            Select Contacts CSV
+            Upload Contacts CSV
             <input
               type="file"
               accept=".csv"
@@ -235,8 +235,7 @@ const SMS = () => {
           </Button>
 
           <span id="csvSpan"> Selected CSV ::: {fileName} </span>
-        </div>
-        <div className="smallContainer">
+
           <label htmlFor="groupNumberInput">
             Enter a Group Number (Most Recent is:{" "}
             {pastInsertGroupNum === null ? "Loading..." : pastInsertGroupNum}){" "}

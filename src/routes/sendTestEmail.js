@@ -18,7 +18,10 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post('/sendTestEmail', async (req, res) => {
-  const { emailAddress, subject, body } = req.body;
+
+  const { emailAddress, subject, body, attachments } = req.body;
+
+  console.log(body.toString())
 
   if (!emailAddress || !subject || !body) {
     return res.status(400).send('Missing required parameters: toEmail, subject, and/or body');
@@ -28,7 +31,9 @@ router.post('/sendTestEmail', async (req, res) => {
     from: process.env.REACT_APP_FROM_EMAIL,
     to: emailAddress,
     subject: subject,
-    text: body,
+    html: body.toString(),
+    attachments: attachments,
+  
   };
 
   try {
