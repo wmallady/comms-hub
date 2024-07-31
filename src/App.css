@@ -126,12 +126,11 @@ button:active{
 /* little containers */ 
 
 .smallContainer {
- display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
 
+}
 
 /**** Button Styling ****/
 
