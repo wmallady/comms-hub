@@ -18,6 +18,7 @@ const Email = () => {
 
   const [pastInsertGroupNum, setPastInsertGroupNum] = useState([]);
   const [testEmail, setTestEmail] = useState([]);
+  const [activePatientEmails, setActivePatientEmails] = useState([]);
 
   const [messageStatus, setMessageStatus] = useState("");
   const [open, setOpen] = useState(false);
@@ -149,7 +150,21 @@ const Email = () => {
     }
   };
 
-  const handleActivePatientsClick = () => {};
+  /// IN TEST ///
+  const handleActivePatientsClick = () => {
+    fetch("http://localhost:5173/pullActivePatientEmail")
+      .then((response) => response.json())
+      .then((data) => {
+        setActivePatientEmails(data.activePatientEmail);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setOpen(true);
+        setMessageStatus("Error Retrieving List of Patient Emails"); // Handle error state if needed
+      });
+  };
+
+  /// IN TEST ///
 
   const handleBodyUpload = (e) => {
     const file = e.target.files[0];
